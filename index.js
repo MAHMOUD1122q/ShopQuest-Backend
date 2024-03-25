@@ -19,7 +19,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({credentials: true, origin:[
-  'http://localhost:3000',
   "shop-quest-frontend.vercel.app"
 ]}));
 
