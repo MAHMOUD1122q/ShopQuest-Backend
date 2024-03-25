@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({credentials: true, origin:[
-  "https://shop-quest-frontend.vercel.app"
+  "https://shop-quest-frontend.vercel.app",
+  "http://localhost:3000"
 ]}));
 
 const port = process.env.SERVER_PORT || 4000;
