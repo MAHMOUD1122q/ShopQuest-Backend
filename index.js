@@ -35,6 +35,10 @@ app.use("/api/color", colorRouter);
 app.use("/api/size", sizeRouter);
 app.use("/api/order", orderRouter);
 
+app.get("/", (req,res) => {
+  res.send("hallo")
+} )
+
 try {
   mongoose
     .connect(process.env.DB_SECRET)
