@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({credentials: true, "origin": "*",
+app.use(cors({credentials: true,
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
   }));
 
