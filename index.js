@@ -22,6 +22,10 @@ app.use(cors({credentials: true,
   "origin":["http://localhost:3000", "https://shop-quest-frontend.vercel.app"]
   }));
 
+app.get("/" , (req,res)=> {
+  res.send("hallo")
+})
+
 const port = process.env.SERVER_PORT || 4000;
 
 app.use("/api/auth", authRouter);
