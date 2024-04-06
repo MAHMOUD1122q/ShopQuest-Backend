@@ -19,9 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({credentials: true,
-  "origin":["http://localhost:3000", "https://shop-quest-frontend.vercel.app"],
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
+  "origin":["http://localhost:3000", "https://shop-quest-frontend.vercel.app"]
   }));
 
 const port = process.env.SERVER_PORT || 4000;
@@ -35,10 +33,6 @@ app.use("/api/coupon", couponRouter);
 app.use("/api/color", colorRouter);
 app.use("/api/size", sizeRouter);
 app.use("/api/order", orderRouter);
-
-app.get("/", (req,res) => {
-  res.send("hallo")
-} )
 
 try {
   mongoose
