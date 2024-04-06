@@ -13,29 +13,30 @@ import sizeRouter from "./routers/size.js";
 import cors from "cors";
 import "dotenv/config";
 
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({credentials: true,
-  "origin":["http://localhost:3000", "https://shop-quest-frontend.vercel.app"]
-  }));
-
-app.get("/" , (req,res)=> {
-  res.send("hallo")
-})
+app.use(cors({ credentials: true, origin: ["http://localhost:3000","*", "https://shop-quest-frontend.vercel.app"]}));
 
 const port = process.env.SERVER_PORT || 4000;
 
 app.use("/api/auth", authRouter);
+
 app.use("/api/product", productRouter);
+
 app.use("/api/slider", sliderRouter);
+
 app.use("/api/category", categoryRouter);
+
 app.use("/api/address", addressRouter);
+
 app.use("/api/coupon", couponRouter);
+
 app.use("/api/color", colorRouter);
+
 app.use("/api/size", sizeRouter);
+
 app.use("/api/order", orderRouter);
 
 try {
