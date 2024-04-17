@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRouter from "./routers/auth.js";
 import productRouter from "./routers/product.js";
 import addressRouter from "./routers/address.js";
+import otpRouter from "./routers/otp.js";
 import sliderRouter from "./routers/sliderImage.js";
 import categoryRouter from "./routers/category.js";
 import orderRouter from "./routers/order.js";
@@ -17,7 +18,9 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ credentials: true, origin: ["http://localhost:3000","*", "https://shop-quest-frontend.vercel.app"]}));
+app.use(cors({ credentials: true,
+
+  origin: ["http://localhost:3000","*","https://shop-quest-frontend.vercel.app"]}));
 
 const port = process.env.SERVER_PORT || 4000;
 
@@ -38,6 +41,8 @@ app.use("/api/color", colorRouter);
 app.use("/api/size", sizeRouter);
 
 app.use("/api/order", orderRouter);
+
+app.use("/api/otp", otpRouter);
 
 try {
   mongoose

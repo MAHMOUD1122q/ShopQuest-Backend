@@ -272,7 +272,7 @@ export const rating = async (req, res) => {
       user: req.user._id,
     };
     // passing review object to reviews array
-    product.reviews.push(review);
+    product.reviews.unshift(review);
     // number or reviews
     product.numReviews = product.reviews.length;
     product.rating =

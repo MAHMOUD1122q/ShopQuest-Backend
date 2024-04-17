@@ -5,8 +5,6 @@ import jwt from "jsonwebtoken";
 import otpGenerator from "otp-generator";
 import { sendMail } from "./mailer.js";
 
-const secret = "aTWbeQsdwdevd122421jhjgngh@#@!#$awwqQe";
-
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -89,7 +87,7 @@ export const login = async (req, res) => {
         image: user.image,
         createdAt: user.createdAt,
       },
-      secret,
+      process.env.JWT_SECRET,
       {},
       (err, token) => {
         if (err) throw err;
@@ -100,6 +98,7 @@ export const login = async (req, res) => {
         res.json({
           success: true,
           message: "Login successful",
+          token,
           email: user.email,
           id: user._id,
           role: user.role,
@@ -117,22 +116,6 @@ export const login = async (req, res) => {
   }
 };
 // =================== Ending Login ==================
-
-// =================== Starting Check Authentication ==================
-
-export const Profile = async (req, res) => {
-  try {
-    const { token } = req.cookies;
-    jwt.verify(token, secret, {}, (err, info) => {
-      if (err) throw err;
-      res.json(info);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-// =================== End Check Authentication ==================
 
 // =================== Starting Logout =========================
 
@@ -513,7 +496,7 @@ export const addToWishlist = async (req, res) => {
   const { _id } = req.user;
   const { prodId } = req.body;
   try {
-    const user = await User.findById(_id);
+    const user = await User.findById(req.user._id);
     const alreadyadded = user.wishlist.find((id) => id.toString() === prodId);
     if (alreadyadded) {
       let user = await User.findByIdAndUpdate(
@@ -562,5 +545,29 @@ export const getWishlist = async (req, res) => {
     });
   } catch (error) {
     throw new Error(error);
+  }
+};
+export const ResetPassword = async (req, res) => {
+  const { id } = req.params;
+  const { newPassword } = req.body;
+
+  if (newPassword.length < 6) {
+    return res.json({
+      success: false,
+      message: "password must be at least 6 characters",
+    });
+  }
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+  const user = await User.updateOne({_id : id}, {password : hashPassword});
+  if (user) {
+    res.json({
+      success: true,
+      message: "reset password successful",
+    });
+  } else {
+    res.json({
+      success: false,
+      message: "reset password failed",
+    });
   }
 };

@@ -1,5 +1,5 @@
 import express  from "express";
-import {Logout, Profile, allUser, login, register,deleteUser, generateOTP, verifyOTP, resetPassword, updatedPassword, updatedUser, SingleUser, UserCart, allCart, DeleteCart, incrementQuntityCartItem, dencrementQuntityCartItem, addToWishlist, getWishlist} from "../controllers/auth.js";
+import {Logout, allUser, login, register,deleteUser, generateOTP, verifyOTP, ResetPassword, updatedPassword, updatedUser, SingleUser, UserCart, allCart, DeleteCart, incrementQuntityCartItem, dencrementQuntityCartItem, addToWishlist, getWishlist} from "../controllers/auth.js";
 import isAuth, { localVariables } from '../middleware/auth.js';
 import { sendMail } from '../controllers/mailer.js'
 
@@ -17,6 +17,8 @@ router.post("/logout", Logout)// logout user
 
 router.post("/add-to-cart", isAuth, UserCart);
 
+router.post("/reset-password/:id",  ResetPassword);
+
 //============ GET =========
 
 
@@ -29,8 +31,6 @@ router.get('/generateOTP',localVariables,generateOTP) // generate random OTP
 router.get('/verifyOTP/:id',verifyOTP) // verify generated OTP
 
 router.get('/single-user/:id', SingleUser) 
-
-router.get("/profile",Profile) // verify auth user
 
 router.get("/all-users", allUser) // get all user
 
@@ -48,11 +48,9 @@ router.put("/increment-item-cart/:id", isAuth, incrementQuntityCartItem);
 
 router.put("/dencrement-item-cart/:id", isAuth, dencrementQuntityCartItem);
 
-router.put("/add-wishlist", isAuth, addToWishlist);
+router.put("/add-wishlist",isAuth, addToWishlist);
 
 //============ PATCH =========
-
-router.patch('/resetPassword/:id',resetPassword); // use to reset password
 
 router.patch('/update-password/:id',updatedPassword); // use to update password
 

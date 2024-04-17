@@ -1,20 +1,27 @@
 import jwt from "jsonwebtoken";
 import User from "../Models/user.js";
-
-const secret = "aTWbeQsdwdevd122421jhjgngh@#@!#$awwqQe";
-
 export default async function isAuth(req, res, next) {
-  const { token } = req.cookies;
-  //valdiation
-  if (!token) {
-    return res.status(401).send({
-      success: false,
-      message: "UnAuthorized User please login first",
-    });
+  const authToken = req.headers.authorization;
+  if (authToken) {
+    const token = authToken.split(" ")[1];
+    try {
+      const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decodedPayload.id);
+      next();
+    } catch (error) {
+      return res.status(401).json({
+        success: false,
+        message: "UnAuthorized User please login first",
+      });
+    }
+  } else {
+    return res
+      .status(401)
+      .json({
+        success: false,
+        message: "UnAuthorized User please login first",
+      });
   }
-  const decodeData = jwt.verify(token,secret);
-  req.user = await User.findById(decodeData.id);
-  next();
 }
 
 export function localVariables(req, res, next) {
