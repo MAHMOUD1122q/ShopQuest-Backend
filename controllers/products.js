@@ -225,13 +225,13 @@ export const updateProduct = async (req, res) => {
   if (product) {
     return res.json({
       success: true,
-      message: "the doctor was updated",
+      message: "the product was updated",
     });
   }
   if (!product) {
     return res.json({
       success: false,
-      message: "No doctor found with this ID",
+      message: "No product found with this ID",
     });
   }
 };
