@@ -218,17 +218,17 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
 
-  const doctor = await Product.findByIdAndUpdate({ _id: id }, req.body, {
+  const product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
     new: true,
   });
 
-  if (doctor) {
+  if (product) {
     return res.json({
       success: true,
       message: "the doctor was updated",
     });
   }
-  if (!doctor) {
+  if (!product) {
     return res.json({
       success: false,
       message: "No doctor found with this ID",
